@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>NKN Admin Hotel</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,600,700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="/static/css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/animate.css">
+
+    <link rel="stylesheet" href="/static/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/static/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="/static/css/magnific-popup.css">
+
+    <link rel="stylesheet" href="/static/css/aos.css">
+
+    <link rel="stylesheet" href="/static/css/ionicons.min.css">
+
+    <link rel="stylesheet" href="/static/css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="/static/css/jquery.timepicker.css">
+
+
+    <link rel="stylesheet" href="/static/css/flaticon.css">
+    <link rel="stylesheet" href="/static/css/icomoon.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+    <!-- Brand -->
+    <a class="navbar-brand" href="#"><span class="text-info">Admin</span> NKN Hotel</a>
+
+    <!-- Toggler/collapsibe Button -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Navbar links -->
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/home}">Home Client</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/admin/room}">Room Manager</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/admin/user}">User Manager</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/admin/statistic}">Statistic</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<!--add room-->
+<br>
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
+            <h1 class="text-center"> Update Room </h1>
+            <div class="card-body">
+                <form th:action="@{/admin/room/update}" th:object="${room}" method="POST" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label> Id </label>
+                        <input
+                                type="text"
+                                name="id"
+                                th:field="*{id}"
+                                class="form-control"
+                                readonly
+                        />
+                    </div>
+                    <div class="form-group">
+                        <label> Name </label>
+                        <input
+                                type="text"
+                                name="name"
+                                th:field="*{name}"
+                                class="form-control"
+                                placeholder="enter name"
+                                required
+                        />
+                        <p class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+                        <p class="error" th:if="${error}" th:text="${error}"></p>
+                    </div>
+                    <div class="form-group">
+                        <label> Size </label>
+                        <input
+                                type="text"
+                                name="name"
+                                th:field="*{size}"
+                                class="form-control"
+                                placeholder="enter size">
+                        <p class="error" th:if="${#fields.hasErrors('size')}" th:errors="*{size}"></p>
+                    </div>
+
+                    <div class="form-group">
+                        <label> CostPerNight </label>
+                        <input
+                                type="text"
+                                name="costPerNight"
+                                th:field="*{costPerNight}"
+                                class="form-control"
+                                placeholder="enter cost"
+                                required
+                        />
+                        <p class="error" th:if="${#fields.hasErrors('costPerNight')}" th:errors="*{costPerNight}"></p>
+                    </div>
+
+                    <div class="form-group">
+                        <label> Description </label>
+                        <input
+                                type="text"
+                                name="description"
+                                th:field="*{description}"
+                                class="form-control"
+                                placeholder="enter description"
+                                required
+                        />
+                        <p class="error" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></p>
+                    </div>
+
+                    <div class="form-group">
+                        <label> Image </label>
+                        <input
+                                type="file"
+                                name="file"
+                                class="form-control"
+                                placeholder="Choose image"
+                                multiple
+                                required
+                        />
+                    </div>
+
+                    <div class="form-group ">
+                        <label> Video </label>
+                        <input
+                                type="text"
+                                name="video"
+                                th:field="*{video}"
+                                class="form-control"
+                                placeholder="enter link video"
+                                required
+                        />
+                        <p class="error" th:if="${#fields.hasErrors('video')}" th:errors="*{video}"></p>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="sel1">Type Of Room</label>
+                        <select class="form-control" id="sel1" th:field="*{type}">
+                            <option th:each="t : ${T(com.example.hotelbooking.model.TypeOfRoom).values()}"
+                                    th:value="${t}"
+                                    th:text="${t.name}" th:selected="${t == type}"></option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="sel1">Active</label>
+                        <select class="form-control" name="active" th:field="*{active}">
+                            <option selected value="true">Unlock</option>
+                            <option value="false">Lock</option>
+                        </select>
+                    </div>
+                    <div class="box-footer">
+                        <button type="submit" class="btn btn-primary">
+                            Lưu
+                        </button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- loader -->
+<div id="ftco-loader" class="show fullscreen">
+    <svg class="circular" width="48px" height="48px">
+        <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/>
+        <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
+                stroke="#F96D00"/>
+    </svg>
+</div>
+
+
+<script src="/static/js/jquery.min.js"></script>
+<script src="/static/js/jquery-migrate-3.0.1.min.js"></script>
+<script src="/static/js/popper.min.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+<script src="/static/js/jquery.easing.1.3.js"></script>
+<script src="/static/js/jquery.waypoints.min.js"></script>
+<script src="/static/js/jquery.stellar.min.js"></script>
+<script src="/static/js/owl.carousel.min.js"></script>
+<script src="/static/js/jquery.magnific-popup.min.js"></script>
+<script src="/static/js/aos.js"></script>
+<script src="/static/js/jquery.animateNumber.min.js"></script>
+<script src="/static/js/bootstrap-datepicker.js"></script>
+<script src="/static/js/scrollax.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+<script src="/static/js/google-map.js"></script>
+<script src="/static/js/main.js"></script>
+
+</body>
+</html>

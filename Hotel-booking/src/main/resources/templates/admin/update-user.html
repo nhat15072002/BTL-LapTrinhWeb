@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>NKN Admin Hotel</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,600,700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="/static/css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/animate.css">
+
+    <link rel="stylesheet" href="/static/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/static/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="/static/css/magnific-popup.css">
+
+    <link rel="stylesheet" href="/static/css/aos.css">
+
+    <link rel="stylesheet" href="/static/css/ionicons.min.css">
+
+    <link rel="stylesheet" href="/static/css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="/static/css/jquery.timepicker.css">
+
+
+    <link rel="stylesheet" href="/static/css/flaticon.css">
+    <link rel="stylesheet" href="/static/css/icomoon.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+    <!-- Brand -->
+    <a class="navbar-brand" href="#"><span class="text-info">Admin</span> NKN Hotel</a>
+
+    <!-- Toggler/collapsibe Button -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Navbar links -->
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/home}">Home Client</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/admin/room}">Room Manager</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{admin/user}">User Manager</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/admin/statistic}">Statistic</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<!--add room-->
+<br>
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
+            <h1 class="text-center"> Update User </h1>
+            <div class="card-body">
+                <form th:action="@{/admin/user/update}" th:object="${user}" method="POST">
+                    <div class="form-group">
+                        <label> ID User </label>
+                        <input
+                                type="text"
+                                name="id"
+                                th:value="*{id}"
+                                readonly
+                                class="form-control"/>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label> Username </label>
+                        <input
+                                type="text"
+                                name="username"
+                                th:value="*{username}"
+                                class="form-control"
+
+                        />
+                        <p class="error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
+                        <p class="error" th:if="${usernameError}" th:text="${usernameError}"></p>
+                    </div>
+
+                    <div class="form-group">
+                        <label> Email </label>
+                        <input
+                                type="text"
+                                name="email"
+                                th:value="*{email}"
+                                class="form-control"
+                        />
+                        <p class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+                        <p class="error" th:if="${emailError}" th:text="${emailError}"></p>
+                    </div>
+
+                    <div class="form-group">
+                        <label> Phone </label>
+                        <input
+                                type="text"
+                                name="phone"
+                                th:value="*{phone}"
+                                class="form-control"
+                        />
+                        <p class="error" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></p>
+                    </div>
+
+                    <input
+                            type="hidden"
+                            name="password"
+                            th:value="*{password}"
+                            class="form-control"
+                    />
+
+
+                    <div class="form-group">
+                        <label for="role">Role</label>
+                        <select class="form-control" id="role" th:field="*{role}">
+                            <option th:each="r : ${T(com.example.hotelbooking.model.Role).values()}" th:value="${r}"
+                                    th:text="${r}"
+                                    th:selected="${r == role}"></option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Active</label>
+                        <select class="form-control" name="active">
+                            <option value="true">Unlock</option>
+                            <option value="false">Lock</option>
+                        </select>
+                    </div>
+                    <div class="box-footer">
+                        <button type="submit" class="btn btn-primary">
+                            Submit
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- loader -->
+<div id="ftco-loader" class="show fullscreen">
+    <svg class="circular" width="48px" height="48px">
+        <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/>
+        <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
+                stroke="#F96D00"/>
+    </svg>
+</div>
+
+
+<script src="/static/js/jquery.min.js"></script>
+<script src="/static/js/jquery-migrate-3.0.1.min.js"></script>
+<script src="/static/js/popper.min.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+<script src="/static/js/jquery.easing.1.3.js"></script>
+<script src="/static/js/jquery.waypoints.min.js"></script>
+<script src="/static/js/jquery.stellar.min.js"></script>
+<script src="/static/js/owl.carousel.min.js"></script>
+<script src="/static/js/jquery.magnific-popup.min.js"></script>
+<script src="/static/js/aos.js"></script>
+<script src="/static/js/jquery.animateNumber.min.js"></script>
+<script src="/static/js/bootstrap-datepicker.js"></script>
+<script src="/static/js/scrollax.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+<script src="/static/js/google-map.js"></script>
+<script src="/static/js/main.js"></script>
+
+</body>
+</html>

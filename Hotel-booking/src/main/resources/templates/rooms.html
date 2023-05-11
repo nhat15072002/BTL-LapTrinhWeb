@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>NKN Hotel</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,600,700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="/static/css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/animate.css">
+
+    <link rel="stylesheet" href="/static/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/static/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="/static/css/magnific-popup.css">
+
+    <link rel="stylesheet" href="/static/css/aos.css">
+
+    <link rel="stylesheet" href="/static/css/ionicons.min.css">
+
+    <link rel="stylesheet" href="/static/css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="/static/css/jquery.timepicker.css">
+
+
+    <link rel="stylesheet" href="/static/css/flaticon.css">
+    <link rel="stylesheet" href="/static/css/icomoon.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+<div th:replace="header::header"></div>
+<!-- END nav -->
+<div class="hero-wrap" style="background-image: url('/static/images/bg_3.jpg');">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row no-gutters slider-text d-flex align-itemd-center justify-content-center">
+            <div class="col-md-9 ftco-animate text-center d-flex align-items-end justify-content-center">
+                <div class="text">
+                    <p class="breadcrumbs mb-2"><span class="mr-2"><a th:href="@{/home}">Home</a></span>
+                        <span>Restaurant</span></p>
+                    <h1 class="mb-4 bread">Rooms</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="ftco-booking ftco-section ftco-no-pt ftco-no-pb">
+	<div class="container">
+		<div class="row no-gutters">
+			<div class="col-lg-12">
+				<form th:action="@{/search}" class="booking-form aside-stretch" method="post">
+					<div class="row">
+						<div class="col-md d-flex py-md-4">
+							<div class="form-group align-self-stretch d-flex align-items-end">
+								<div class="wrap align-self-stretch py-3 px-4">
+									<label for="#">Check-in Date</label>
+									<input type="text" class="form-control datepicker checkin_date" name="startDate" data-date-format="dd/mm/yyyy"
+										   placeholder="Check-in date">
+								</div>
+							</div>
+						</div>
+						<div class="col-md d-flex py-md-4">
+							<div class="form-group align-self-stretch d-flex align-items-end">
+								<div class="wrap align-self-stretch py-3 px-4">
+									<label for="#">Check-out Date</label>
+									<input type="text" class="form-control datepicker checkout_date" name="endDate" data-date-format="dd/mm/yyyy"
+										   placeholder="Check-out date">
+								</div>
+							</div>
+						</div>
+						<div class="col-md d-flex py-md-4">
+							<div class="form-group align-self-stretch d-flex align-items-end">
+								<div class="wrap align-self-stretch py-3 px-4">
+									<label for="#">Room</label>
+									<div class="form-field">
+										<div class="select-wrap">
+											<div class="icon"><span class="ion-ios-arrow-down"></span></div>
+											<select name="type" id="type" class="form-control">
+												<option th:each="type : ${T(com.example.hotelbooking.model.TypeOfRoom).values()}"
+														th:value="${type}"
+														th:text="${type.name}"></option>
+											</select>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-md d-flex">
+							<div class="form-group d-flex align-self-stretch">
+                                <button class="btn btn-primary py-5 py-md-3 px-4 align-self-stretch d-block">Check Availability <small>Best Price Guaranteed!</small></button>
+<!--								<a href="#" class="btn btn-primary py-5 py-md-3 px-4 align-self-stretch d-block"><span>Check Availability <small>Best Price Guaranteed!</small></span></a>-->
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+    <div th:if="${error}">
+        <p class="alert alert-danger" th:text="${error}"></p>
+    </div>
+</section>
+<section th:if="${roomsSearch}" class="ftco-section ftco-no-pb ftco-room">
+	<div class="container-fluid px-0">
+		<div class="row no-gutters justify-content-center mb-5 pb-3">
+			<div class="col-md-7 heading-section text-center ftco-animate">
+				<span class="subheading">NKN Rooms</span>
+				<h2 class="mb-4">NKN Search Rooms</h2>
+			</div>
+		</div>
+		<div class="row no-gutters">
+			<div th:each="room : ${roomsSearch}" class="col-lg-6">
+				<div class="room-wrap d-md-flex ftco-animate">
+					<a th:href="@{/room/{id} (id = ${room.id})}" class="img"
+                       th:style="'background-image: url(' + ${room.img.get(0)} + ')'"></a>
+					<div class="half left-arrow d-flex align-items-center">
+						<div class="text p-4 text-center">
+							<p class="star mb-0"><span class="ion-ios-star"></span><span
+									class="ion-ios-star"></span><span class="ion-ios-star"></span><span
+									class="ion-ios-star"></span><span class="ion-ios-star"></span></p>
+							<p class="mb-0"><span class="price mr-1" th:text="${room.costPerNight}"></span> <span
+									class="per">per night</span>
+							</p>
+							<h3 class="mb-3" th:text="${room.name}"></h3>
+							<p class="pt-1"><a th:href="@{/room/{id} (id = ${room.id})}"
+											   class="btn-custom px-3 py-2 rounded">View Details
+								<span class="icon-long-arrow-right"></span></a></p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="ftco-section ftco-no-pb ftco-room">
+    <div class="container-fluid px-0">
+        <div class="row no-gutters justify-content-center mb-5 pb-3">
+            <div class="col-md-7 heading-section text-center ftco-animate">
+                <span class="subheading">NKN Rooms</span>
+                <h2 class="mb-4">Hotel Master's Rooms</h2>
+            </div>
+        </div>
+        <div class="row no-gutters">
+            <div th:each="room : ${rooms}" class="col-lg-6">
+                <div class="room-wrap d-md-flex ftco-animate">
+                    <a href="#" class="img" th:style="'background-image: url(' + ${room.img.get(0)} + ')'"></a>
+                    <div class="half left-arrow d-flex align-items-center">
+                        <div class="text p-4 text-center">
+                            <p class="star mb-0"><span class="ion-ios-star"></span><span
+                                    class="ion-ios-star"></span><span class="ion-ios-star"></span><span
+                                    class="ion-ios-star"></span><span class="ion-ios-star"></span></p>
+                            <p class="mb-0"><span class="price mr-1" th:text="${room.costPerNight}"></span> <span class="per">per night</span>
+                            </p>
+                            <h3 class="mb-3" th:text="${room.type.name}"></h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<div th:replace="footer::footer"></div>
+
+
+<!-- loader -->
+<div id="ftco-loader" class="show fullscreen">
+    <svg class="circular" width="48px" height="48px">
+        <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/>
+        <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
+                stroke="#F96D00"/>
+    </svg>
+</div>
+
+
+<script src="/static/js/jquery.min.js"></script>
+<script src="/static/js/jquery-migrate-3.0.1.min.js"></script>
+<script src="/static/js/popper.min.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+<script src="/static/js/jquery.easing.1.3.js"></script>
+<script src="/static/js/jquery.waypoints.min.js"></script>
+<script src="/static/js/jquery.stellar.min.js"></script>
+<script src="/static/js/owl.carousel.min.js"></script>
+<script src="/static/js/jquery.magnific-popup.min.js"></script>
+<script src="/static/js/aos.js"></script>
+<script src="/static/js/jquery.animateNumber.min.js"></script>
+<script src="/static/js/bootstrap-datepicker.js"></script>
+<script src="/static/js/scrollax.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+<script src="/static/js/google-map.js"></script>
+<script src="/static/js/main.js"></script>
+
+</body>
+</html>
